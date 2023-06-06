@@ -53,7 +53,7 @@ function loginReq(token) {
 //
 
 ;(async()=>{
-    let token = await getAuthToken();
-    console.log(token);
-    //loginReq(token);
+    let auth = await getAuthToken();
+    console.log(auth);
+    //loginReq(auth.token);
 })();
