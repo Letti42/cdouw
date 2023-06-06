@@ -32,11 +32,11 @@ if(error !== null)
 
 });
 */
-function loginReq(token) {
-    let cred = { "user[hashed_email]": process.env.EMAIL, "user[login]": "", "user[password]": process.env.PASSWORD, "authenticity_token": token };
+function loginReq(auth) {
+    let cred = { "user[hashed_email]": process.env.EMAIL, "user[login]": "", "user[password]": process.env.PASSWORD, "authenticity_token": auth.token };
     let form = queryString.stringify(cred);
 
-    let cmd = `curl -v -X POST https://studio.code.org/users/sign_in -H "Origin: https://studio.code.org/users/sign_in" -H "Content-Type: application/x-www-form-urlencoded" -d "${form}"`
+    let cmd = `curl -v -X POST https://studio.code.org/users/sign_in --cookie "${auth.cookie}" -H "Origin: https://studio.code.org/users/sign_in" -H "Content-Type: application/x-www-form-urlencoded" -d "${form}"`
 
     exec(cmd, function (error, stdout, stderr) {
 
@@ -55,5 +55,5 @@ function loginReq(token) {
 ;(async()=>{
     let auth = await getAuthToken();
     console.log(auth);
-    //loginReq(auth.token);
+    //loginReq(auth);
 })();
